@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Encuesta de Preselección de Viviendas</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      :root {
+        --koica: #00479d;
+        --worldvision: #f58220;
+        --bg: #eef3f8;
+        --card: #ffffff;
+        --text: #1f2937;
+        --border: #d1d5db;
+        --success: #16a34a;
+        --danger: #dc2626;
+        --radius: 16px;
+        --shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        line-height: 1.5;
+      }
+
+      header {
+        background: linear-gradient(135deg, var(--koica), #0a62cb);
+        color: white;
+        padding: 18px;
+        position: sticky;
+        top: 0;
+        z-index: 999;
+        box-shadow: var(--shadow);
+      }
+
+      .header-container {
+        max-width: 1200px;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 20px;
+      }
+
+      .logos {
+        display: flex;
+        gap: 15px;
+        align-items: center;
+      }
+
+      .logos img {
+        height: 58px;
+        background: white;
+        border-radius: 10px;
+        padding: 6px 12px;
+      }
+
+      .header-text h1 {
+        font-size: 1.6rem;
+        font-weight: 700;
+      }
+
+      .header-text p {
+        opacity: 0.9;
+        font-size: 0.95rem;
+      }
+
+      .progress-wrapper {
+        margin-top: 16px;
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 999px;
+        overflow: hidden;
+        height: 12px;
+      }
+
+      .progress-bar {
+        width: 0%;
+        height: 100%;
+        background: var(--worldvision);
+        transition: 0.4s;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 30px auto 80px;
+        padding: 0 16px;
+      }
+
+      .card {
+        background: var(--card);
+        border-radius: var(--radius);
+        box-shadow: var(--shadow);
+        margin-bottom: 24px;
+        overflow: hidden;
+      }
+
+      .card-title {
+        background: var(--koica);
+        color: white;
+        padding: 18px 24px;
+        font-weight: 600;
+        border-left: 8px solid var(--worldvision);
+        font-size: 1.05rem;
+      }
+
+      .card-body {
+        padding: 24px;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 18px;
+      }
+
+      .question {
+        margin-bottom: 22px;
+      }
+
+      .question label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: var(--koica);
+      }
+
+      input[type="text"],
+      input[type="number"],
+      input[type="date"],
+      textarea,
+      select {
+        width: 100%;
+        padding: 13px;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        font-family: inherit;
+        background: #fafafa;
+      }
+
+      input:focus,
+      textarea:focus,
+      select:focus {
+        outline: none;
+        border-color: var(--koica);
+        box-shadow: 0 0 0 4px rgba(0, 71, 157, 0.12);
+      }
+
+      .options {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .option {
+        background: #f8fafc;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        transition: 0.2s;
+      }
+
+      .option:hover {
+        border-color: var(--worldvision);
+        transform: translateY(-2px);
+      }
+
+      .badge {
+        display: inline-block;
+        background: rgba(245, 130, 32, 0.12);
+        color: var(--worldvision);
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-size: 12px;
+        margin-top: 10px;
+        font-weight: 600;
+      }
+
+      .gps-box,
+      .result-box {
+        padding: 20px;
+        border-radius: 14px;
+        background: #fff7ed;
+        border-left: 6px solid var(--worldvision);
+        margin-top: 18px;
+      }
+
+      .result-box h3 {
+        margin-bottom: 12px;
+      }
+
+      .actions {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+        margin-top: 30px;
+      }
+
+      button {
+        border: none;
+        padding: 15px 22px;
+        border-radius: 14px;
+        cursor: pointer;
+        font-weight: 700;
+        font-family: inherit;
+        transition: 0.2s;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--koica), var(--worldvision));
+        color: white;
+        flex: 1;
+      }
+
+      .btn-secondary {
+        background: #e5e7eb;
+        color: #111827;
+      }
+
+      button:hover {
+        transform: scale(1.01);
+      }
+
+      footer {
+        text-align: center;
+        padding: 40px 20px;
+        color: #6b7280;
+      }
+
+      @media (max-width: 700px) {
+        .header-container {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .logos img {
+          height: 45px;
+        }
+        .actions {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="header-container">
+        <div class="logos">
+          <img src="https://lh3.googleusercontent.com/d/1s50cSDpxq_Y7FmAvVEXP5fMrKDSNCJYT" width="120" />
+          <img src="https://lh3.googleusercontent.com/d/1lxonlJdF6Foe0J3SM6h_olLYtkbAl9ik" width="120" />
+        </div>
+        <div class="header-text">
+          <h1>Encuesta de Preselección de Viviendas</h1>
+          <p>KOICA · World Vision Bolivia</p>
+        </div>
+      </div>
+      <div class="progress-wrapper">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+    </header>
+
+    <div class="container">
+      <div class="card">
+        <div class="card-title">Consentimiento Informado</div>
+        <div class="card-body">
+          <p>La información recopilada será utilizada únicamente para fines de evaluación, preselección y análisis técnico-social del proyecto.</p>
+          <div class="options" style="margin-top: 20px">
+            <div class="option">
+              <input type="checkbox" id="consentimiento" name="consentimiento" />
+              <label for="consentimiento">Acepto participar voluntariamente</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Geolocalización y Registro</div>
+        <div class="card-body">
+          <div class="grid">
+            <div class="question">
+              <label>Fecha de encuesta</label>
+              <input type="date" id="fecha_encuesta" name="fecha" />
+            </div>
+            <div class="question">
+              <label>Encuestador</label>
+              <input type="text" id="encuestador" placeholder="Nombre del encuestador" />
+            </div>
+          </div>
+          <div class="gps-box">
+            <strong>Ubicación GPS:</strong>
+            <p id="gpsText">Esperando ubicación...</p>
+          </div>
+          <div class="actions">
+            <button class="btn-secondary" onclick="obtenerGPS()">Capturar GPS</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">I. Datos de Identificación</div>
+        <div class="card-body">
+          <div class="grid">
+            <div class="question">
+              <label>Nombre del entrevistado/a</label>
+              <input type="text" required id="nombre_entrevistado" />
+            </div>
+            <div class="question">
+              <label>Edad</label>
+              <input type="number" id="edad" />
+            </div>
+            <div class="question">
+              <label>Celular</label>
+              <input type="text" id="celular" />
+            </div>
+            <div class="question">
+              <label>Género</label>
+              <select id="genero">
+                <option value="">Seleccione</option>
+                <option value="Masculino">Masculino</option>
+                <option value="Femenino">Femenino</option>
+                <option value="Otro">Otro</option>
+              </select>
+            </div>
+            <div class="question">
+              <label>Comunidad / Barrio</label>
+              <input type="text" id="comunidad" />
+            </div>
+            <div class="question">
+              <label>Dirección exacta</label>
+              <textarea id="direccion" rows="3"></textarea>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Relación con el jefe del hogar</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="relacion" value="Yo" /> Yo</div>
+              <div class="option"><input type="radio" name="relacion" value="Cónyuge" /> Cónyuge</div>
+              <div class="option"><input type="radio" name="relacion" value="Hijo/a" /> Hijo/a</div>
+              <div class="option"><input type="radio" name="relacion" value="Otro" /> Otro</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>¿Hay niños registrados en Vision Mundial Bolivia?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="vision_ninos" value="Si" /> Sí</div>
+              <div class="option"><input type="radio" name="vision_ninos" value="No" /> No</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Si están registrados indique el nombre de los niños(as)</label>
+            <input type="text" id="nombre_niños" />
+          </div>
+
+          <div class="question">
+            <label>¿En qué centro de salud se atiende con frecuencia?</label>
+            <input type="text" id="centro_salud" />
+          </div>
+
+          <div class="question">
+            <label>Si no acude a ningún centro de salud, ¿quién cuida y atiende al enfermo/a del hogar?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="cuidador" value="Padre" /> Padre</div>
+              <div class="option"><input type="radio" name="cuidador" value="Madre" /> Madre</div>
+              <div class="option"><input type="radio" name="cuidador" value="Abuelo" /> Abuelo</div>
+              <div class="option"><input type="radio" name="cuidador" value="Abuela" /> Abuela</div>
+              <div class="option"><input type="radio" name="cuidador" value="Otro" /> Otro</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>¿Fue participante como patrocinio o proyecto de huertos o similar de Vision Mundial Bolivia?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="vision" value="Si" /> Sí</div>
+              <div class="option"><input type="radio" name="vision" value="No" /> No</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Tipo de vivienda</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="tipo_vivienda" value="Casa" /> Casa</div>
+              <div class="option"><input type="radio" name="tipo_vivienda" value="Cuarto" /> Cuarto</div>
+              <div class="option"><input type="radio" name="tipo_vivienda" value="Otro" /> Otro</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Tenencia de la vivienda</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="tenencia" value="Propia" /> Propia</div>
+              <div class="option"><input type="radio" name="tenencia" value="Alquilada" /> Alquilada</div>
+              <div class="option"><input type="radio" name="tenencia" value="Familiar" /> Familiar</div>
+              <div class="option"><input type="radio" name="tenencia" value="Cedida por servicios" /> Cedida por servicios</div>
+              <div class="option"><input type="radio" name="tenencia" value="Otro" /> Otro</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Si es propia la casa/cuarto ¿tiene documentos?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="documentos" value="Si" /> Sí</div>
+              <div class="option"><input type="radio" name="documentos" value="No" /> No</div>
+              <div class="option"><input type="radio" name="documentos" value="En Tramite" /> En trámite</div>
+              <div class="option"><input type="radio" name="documentos" value="Otro" /> Otro</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">II. Composición del Hogar y Vulnerabilidad Social</div>
+        <div class="card-body">
+          <div class="question">
+            <label>¿Hay niños, niñas o adolescentes?</label>
+            <div class="grid">
+              <input type="number" id="ninos_0_11" placeholder="0 - 11 años" />
+              <input type="number" id="ninos_12_17" placeholder="12 - 17 años" />
+            </div>
+          </div>
+          <div class="question">
+            <label>¿Hay adultos mayores?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="adultos" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="adultos" value="No" /> No</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>¿Hay personas con discapacidad o enfermedad crónica?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="discapacidad" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="discapacidad" value="No" /> No</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">III. Condición Socioeconómica</div>
+        <div class="card-body">
+          <div class="question">
+            <label>Ingreso aproximado mensual del hogar</label>
+            <input type="number" id="ingreso_mensual" placeholder="Bs." />
+          </div>
+          <div class="question">
+            <label>Acceso a agua segura</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="agua" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="agua" value="No" /> No</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>Acceso a saneamiento básico</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="saneamiento" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="saneamiento" value="No" /> No</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">IV. Conditions Físicas de la Vivienda</div>
+        <div class="card-body">
+          <div class="question">
+            <label>Tipo de vivienda física</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="tipoVivienda" value="Casa" /> Casa</div>
+              <div class="option"><input type="radio" name="tipoVivienda" value="Choza" /> Choza</div>
+              <div class="option"><input type="radio" name="tipoVivienda" value="Pahuichi" /> Pahuichi</div>
+              <div class="option"><input type="radio" name="tipoVivienda" value="Rancho" /> Rancho</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Material del techo (Selec. los que apliquen)</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="techo" value="Calamina" /> Calamina</div>
+              <div class="option"><input type="checkbox" name="techo" value="Teja" /> Teja</div>
+              <div class="option"><input type="checkbox" name="techo" value="Paja o palma" /> Paja o palma</div>
+              <div class="option"><input type="checkbox" name="techo" value="Hormigón" /> Hormigón</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Tipo de cielo raso</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="raso" value="Placa de yeso" /> Placa de yeso</div>
+              <div class="option"><input type="checkbox" name="raso" value="Madera" /> Madera</div>
+              <div class="option"><input type="checkbox" name="raso" value="Poliestireno" /> Poliestireno</div>
+              <div class="option"><input type="checkbox" name="raso" value="Metal" /> Metal</div>
+              <div class="option"><input type="checkbox" name="raso" value="No tiene" /> No tiene</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Tipo de material de paredes</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="pared" value="Madera" /> Madera</div>
+              <div class="option"><input type="checkbox" name="pared" value="Ladrillo" /> Ladrillo</div>
+              <div class="option"><input type="checkbox" name="pared" value="Adobe" /> Adobe</div>
+              <div class="option"><input type="checkbox" name="pared" value="Piedra" /> Piedra</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>Tipo de material de piso</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="piso" value="Tierra" /> Tierra</div>
+              <div class="option"><input type="checkbox" name="piso" value="Madera" /> Madera</div>
+              <div class="option"><input type="checkbox" name="piso" value="Cemento" /> Cemento</div>
+              <div class="option"><input type="checkbox" name="piso" value="Ladrillo" /> Ladrillo</div>
+              <div class="option"><input type="checkbox" name="piso" value="Ceramica" /> Cerámica</div>
+            </div>
+          </div>
+
+          <div class="question">
+            <label>¿La vivienda presenta grietas o filtraciones?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="grietas" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="grietas" value="No" /> No</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">V. Riesgo por Enfermedades Vectoriales</div>
+        <div class="card-body">
+          <div class="question">
+            <label>¿Existe presencia frecuente de mosquitos?</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="mosquito" value="Sí" /> Sí</div>
+              <div class="option"><input type="checkbox" name="mosquito" value="No" /> No</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>¿Algún miembro tuvo dengue o malaria?</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="dengue" value="Sí" /> Sí</div>
+              <div class="option"><input type="checkbox" name="dengue" value="No" /> No</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>¿Utilizan mosquiteros?</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="mosquiteros" value="Niños/as" /> Niños/as</div>
+              <div class="option"><input type="checkbox" name="mosquiteros" value="Embarazadas" /> Embarazadas</div>
+              <div class="option"><input type="checkbox" name="mosquiteros" value="Adultos mayores" /> Adultos mayores</div>
+              <div class="option"><input type="checkbox" name="mosquiteros" value="Toda la familia" /> Toda la familia</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>¿Reducen su exposición a los mosquitos? Si la respuesta es sí ¿Cómo? Elija al menos una opción</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="reducen" value="espiral" /> Quemamos Espiral</div>
+              <div class="option"><input type="checkbox" name="reducen" value="humo" /> Ponemos humo (cartón, hojas o cáscara) para espantar mosquitos</div>
+              <div class="option"><input type="checkbox" name="reducen" value="baygon" /> Echamos baygon o spray, pero solo cuando hay plata</div>
+              <div class="option"><input type="checkbox" name="reducen" value="mosquetero" /> Dormimos con mosquetero cuando hace menos calor o hay elevada presencia de mosquitos</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">VI. Participación Comunitaria y Liderazgo</div>
+        <div class="card-body">
+          <div class="question">
+            <label>¿Participa en acciones comunitarias?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="comunitario" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="comunitario" value="No" /> No</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>¿Participa en campañas ambientales o de salud?</label>
+            <div class="options">
+              <div class="option"><input type="radio" name="campanas" value="Sí" /> Sí</div>
+              <div class="option"><input type="radio" name="campanas" value="No" /> No</div>
+            </div>
+          </div>
+          <div class="question">
+            <label>Prácticas de prevención de mosquitos</label>
+            <div class="options">
+              <div class="option"><input type="checkbox" name="prevencion" value="Eliminación de criaderos" /> Eliminación de criaderos</div>
+              <div class="option"><input type="checkbox" name="prevencion" value="Uso de repelente" /> Uso de repelente</div>
+              <div class="option"><input type="checkbox" name="prevencion" value="Jornadas de limpieza" /> Jornadas de limpieza</div>
+              <div class="option"><input type="checkbox" name="prevencion" value="Tapado de recipientes" /> Tapado de recipientes</div>
+            </div>
+          </div>
+
+          <div class="result-box">
+            <h3>Clasificación de Riesgo</h3>
+            <p><strong>Alto riesgo:</strong> 191 – 285 puntos</p>
+            <p><strong>Bajo riesgo:</strong> 96 – 190 puntos</p>
+            <p><strong>Muy bajo riesgo:</strong> 0 – 95 puntos</p>
+            <div class="badge" id="resultadoBadge">Resultado pendiente</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn-primary" onclick="guardarEncuesta()">Guardar Encuesta</button>
+            <button class="btn-secondary" onclick="calcularRiesgo()">Calcular Riesgo</button>
+            <button class="btn-secondary" onclick="exportarCSV()">Exportar CSV</button>
+          </div>
+
+          <div style="margin-top: 30px; overflow: auto">
+            <table id="tablaRegistros" style="width: 100%; border-collapse: collapse; min-width: 900px">
+              <thead>
+                <tr style="background: #00479d; color: white">
+                  <th style="padding: 12px; border: 1px solid #ddd">Fecha</th>
+                  <th style="padding: 12px; border: 1px solid #ddd">Nombre</th>
+                  <th style="padding: 12px; border: 1px solid #ddd">Edad</th>
+                  <th style="padding: 12px; border: 1px solid #ddd">Celular</th>
+                  <th style="padding: 12px; border: 1px solid #ddd">Comunidad</th>
+                  <th style="padding: 12px; border: 1px solid #ddd">Resultado</th>
+                </tr>
+              </thead>
+              <tbody id="bodyRegistros"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer>Sistema de Encuestas · KOICA & World Vision Bolivia</footer>
+
+    <script>
+      const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyBY85ynFztJ5ZI6Z-p1yigUHJFzxqOfPvncB8fWNoZwxZDWNV2tww8Nt57t8PPKMqDwA/exec";
+
+      const inputs = document.querySelectorAll("input, textarea, select");
+      const progressBar = document.getElementById("progressBar");
+
+      function updateProgress() {
+        let filled = 0;
+        inputs.forEach((input) => {
+          if (input.type === "checkbox" || input.type === "radio") {
+            if (input.checked) filled++;
+          } else {
+            if (input.value.trim() !== "") filled++;
+          }
+        });
+        const percent = (filled / (inputs.length || 1)) * 100;
+        progressBar.style.width = percent + "%";
+      }
+      inputs.forEach((input) => {
+        input.addEventListener("change", updateProgress);
+        input.addEventListener("keyup", updateProgress);
+      });
+
+      let gpsCoordenadas = "No capturado";
+      function obtenerGPS() {
+        const gpsText = document.getElementById("gpsText");
+        if (navigator.geolocation) {
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              gpsCoordenadas = `Lat: ${position.coords.latitude}, Lon: ${position.coords.longitude}`;
+              gpsText.innerHTML = gpsCoordenadas;
+            },
+            () => {
+              gpsText.innerHTML = "No se pudo obtener la ubicación.";
+              gpsCoordenadas = "Fallo de captura";
+            },
+          );
+        } else {
+          gpsText.innerHTML = "GPS no soportado.";
+        }
+      }
+
+      function calcularRiesgo() {
+        let score = 0;
+        document.querySelectorAll('input[type="radio"]:checked').forEach(() => {
+          score += 10;
+        });
+        document.querySelectorAll('input[type="checkbox"]:checked').forEach(() => {
+          score += 5;
+        });
+        const badge = document.getElementById("resultadoBadge");
+        if (score >= 191) {
+          badge.innerHTML = "Alto Riesgo";
+          badge.style.background = "#fee2e2";
+          badge.style.color = "#b91c1c";
+        } else if (score >= 96) {
+          badge.innerHTML = "Bajo Riesgo";
+          badge.style.background = "#fef3c7";
+          badge.style.color = "#92400e";
+        } else {
+          badge.innerHTML = "Muy Bajo Riesgo";
+          badge.style.background = "#dcfce7";
+          badge.style.color = "#166534";
+        }
+      }
+
+      function getRadioValue(name) {
+        const radio = document.querySelector(`input[name="${name}"]:checked`);
+        return radio ? radio.value : "";
+      }
+
+      function getCheckboxValues(name) {
+        const values = [];
+        document.querySelectorAll(`input[name="${name}"]:checked`).forEach((cb) => {
+          values.push(cb.value);
+        });
+        return values.join(", ");
+      }
+
+      async function enviarAGoogleSheets(data) {
+        try {
+          const response = await fetch(SCRIPT_URL, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          });
+          return true;
+        } catch (error) {
+          console.error(error);
+          return false;
+        }
+      }
+
+      async function guardarEncuesta() {
+        calcularRiesgo();
+
+        // === OBJETO DATA TOTALMENTE ACTUALIZADO Y VINCULADO ===
+        const data = {
+          fechaRegistro: new Date().toLocaleString(),
+          fecha_encuesta: document.getElementById("fecha_encuesta").value,
+          encuestador: document.getElementById("encuestador").value,
+          consentimiento: document.getElementById("consentimiento").checked ? "Sí" : "No",
+          nombre_entrevistado: document.getElementById("nombre_entrevistado").value,
+          edad: document.getElementById("edad").value,
+          celular: document.getElementById("celular").value,
+          genero: document.getElementById("genero").value,
+          comunidad: document.getElementById("comunidad").value,
+          direccion: document.getElementById("direccion").value, 
+          relacion_jefe: getRadioValue("relacion"),
+          vision_ninos: getRadioValue("vision_ninos"),
+          nombre_niños: document.getElementById("nombre_niños").value,
+          centro_salud: document.getElementById("centro_salud").value,
+          cuidador_enfermo: getRadioValue("cuidador"),
+          participo_vision: getRadioValue("vision"),
+          tipo_vivienda_izq: getRadioValue("tipo_vivienda"),
+          tenencia_vivienda: getRadioValue("tenencia"),
+          documentos_vivienda: getRadioValue("documentos"),
+          ninos_0_11: document.getElementById("ninos_0_11").value,
+          ninos_12_17: document.getElementById("ninos_12_17").value,
+          adultos_mayores: getRadioValue("adultos"),
+          discapacidad: getRadioValue("discapacidad"),
+          ingreso_mensual: document.getElementById("ingreso_mensual").value,
+          agua_segura: getRadioValue("agua"),
+          saneamiento: getRadioValue("saneamiento"),
+          tipo_vivienda_fisica: getRadioValue("tipoVivienda"),
+          material_techo: getCheckboxValues("techo"),
+          
+          // LÍNEAS QUE EXTRAEN LOS NUEVOS CAMPOS DEL FORMULARIO HTML
+          cielo_raso: getCheckboxValues("raso"),
+          material_paredes: getCheckboxValues("pared"),
+          material_piso: getCheckboxValues("piso"),
+          
+          grietas: getRadioValue("grietas"),
+          mosquitos: getCheckboxValues("mosquito"),       
+          dengue_malaria: getCheckboxValues("dengue"),   
+          uso_mosquiteros: getCheckboxValues("mosquiteros"),       
+          reduccion_exposicion: getCheckboxValues("reducen"),      
+          participacion_comunitaria: getRadioValue("comunitario"),  
+          campanas_ambientales: getRadioValue("campanas"),          
+          practicas_prevencion: getCheckboxValues("prevencion"),   
+          resultado_riesgo: document.getElementById("resultadoBadge").innerText.trim(),
+          gps: gpsCoordenadas,
+        };
+
+        localStorage.setItem("encuesta_vivienda_actual", JSON.stringify(data));
+        agregarRegistroTabla(data);
+
+        const enviado = await enviarAGoogleSheets(data);
+        if (enviado) {
+          alert("Encuesta registrada exitosamente en Google Sheets con todos los campos corregidos.");
+        } else {
+          alert("Guardado en local. No se pudo conectar con la Aplicación Web de Google.");
+        }
+      }
+
+      function agregarRegistroTabla(data) {
+        const tbody = document.getElementById("bodyRegistros");
+        const row = `
+          <tr>
+            <td style="padding:10px; border:1px solid #ddd;">${data.fecha_encuesta || "N/A"}</td>
+            <td style="padding:10px; border:1px solid #ddd;">${data.nombre_entrevistado || "N/A"}</td>
+            <td style="padding:10px; border:1px solid #ddd;">${data.edad || "N/A"}</td>
+            <td style="padding:10px; border:1px solid #ddd;">${data.celular || "N/A"}</td>
+            <td style="padding:10px; border:1px solid #ddd;">${data.comunidad || "N/A"}</td>
+            <td style="padding:10px; border:1px solid #ddd;">${data.resultado_riesgo}</td>
+          </tr>
+        `;
+        tbody.innerHTML += row;
+      }
+
+      function exportarCSV() {
+        const rows = [];
+        const table = document.getElementById("tablaRegistros");
+        for (let i = 0; i < table.rows.length; i++) {
+          const cols = table.rows[i].querySelectorAll("td, th");
+          const row = [];
+          cols.forEach((col) => {
+            row.push('"' + col.innerText.replace(/"/g, '""') + '"');
+          });
+          rows.push(row.join(","));
+        }
+        const csvContent = rows.join("\n");
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "encuestas_viviendas.csv";
+        link.click();
+      }
+
+      window.onload = () => {
+        const saved = localStorage.getItem("encuesta_vivienda_actual");
+        if (saved) {
+          const data = JSON.parse(saved);
+          if (data.fecha_encuesta) document.getElementById("fecha_encuesta").value = data.fecha_encuesta;
+          if (data.nombre_entrevistado) document.getElementById("nombre_entrevistado").value = data.nombre_entrevistado;
+          updateProgress();
+        }
+      };
+    </script>
+  </body>
+</html>
